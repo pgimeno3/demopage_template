@@ -1,0 +1,388 @@
+<!doctype html>
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=1024">
+  <script src="template.v2.js"></script>
+
+  <style>
+    body {
+      --gray-bg: hsl(0, 0%, 97%);
+      --gray-border: rgba(0, 0, 0, 0.1);
+      --border-radius: 5px;
+    }
+
+    d-title {
+      overflow-y: hidden;
+      padding-bottom: 0;
+    }
+
+    d-title h1, d-title p {
+      grid-column: page;
+    }
+
+    d-figure {
+      margin: 20px 0 40px;
+    }
+
+    d-slider {
+      width: 100%;
+    }
+
+    @media (max-width: 1280px) {
+      d-title br.conditional {
+        display: none;
+      }
+    }
+
+    #Teaser {
+      margin-top: 0;
+      margin-bottom: 0;
+      background: var(--gray-bg);
+      border-top: 1px solid var(--gray-border);
+      min-height: 100px;
+    }
+
+    figure.full-width {
+      grid-column: screen;
+    }
+
+    #AttributionSpatial {
+      background: var(--gray-bg);
+      padding: 20px 0;
+      border-top: 1px solid var(--gray-border);
+      border-bottom: 1px solid var(--gray-border);
+    }
+
+    #AttributionChannel, #ActivationGroups, #AttributionGroups {
+      background: var(--gray-bg);
+      padding-top: 20px;
+      padding-bottom: 20px;
+      border-top: 1px solid var(--gray-border);
+      border-bottom: 1px solid var(--gray-border);
+    }
+
+    #ActivationGroups {
+      display: block;
+    }
+    
+    .attribution_list {
+      display: inline-block;
+      list-style-type: none;
+      padding: 0;
+      margin: 0;
+    }
+
+    .attribution_list li {
+      position: relative;
+      display: grid;
+      grid-template-columns: 2fr 1fr;
+      grid-column-gap: 10px;
+      margin-bottom: 0;
+      text-transform: capitalize;
+      width: 100%;
+    }
+
+    .attribution_list li span {
+      overflow: hidden;
+      white-space: nowrap;
+      text-overflow: ellipsis;
+    }
+
+    .attribution_list .scent {
+      display: flex;
+      position: relative;
+      align-items: center;
+    }
+
+    .attribution_list .scent div {
+      left: 0;
+      background: #ccc;
+      height: 10px;
+    }
+
+    .red { color: #c82829; border-color: #c82829 }
+    .orange { color: #f5871f; border-color: #f5871f }
+    .yellow { color: #eab700; border-color: #eab700 }
+    .green { color: #718c00; border-color: #718c00 }
+    .aqua { color: #3e999f; border-color: #3e999f }
+    .blue { color: #4271ae; border-color: #4271ae }
+    .purple { color: #8959a8; border-color: #8959a8 }
+
+    .parent {
+     position: relative;
+     top: 0;
+     left: 0;
+    }
+    .image1 {
+     position: relative;
+     top: 0;
+     left: 0;
+    }
+    .image2 {
+    position: absolute;
+    top: 0;
+    left: 0;
+    }
+
+
+
+    /* Heights for progressively loaded graphics */
+    @media (min-width: 1000px) {
+      #Teaser {
+        /* min-height: 660px; */
+      }
+
+      #AttributionChannel {
+        min-height: 608px;
+      }
+
+      #AllActivationGrids {
+        min-height: 250px;
+      }
+
+      #AllActivationGridsMagnitude {
+        min-height: 250px;
+      }
+
+      #AttributionSpatial {
+        min-height: 500px;
+      }
+
+      #ActivationGroups {
+        min-height: 800px;
+      }
+
+      #AttributionGroups{
+        min-height: 722px;
+      }
+    }
+
+
+  </style>
+</head>
+
+<body>
+
+<d-front-matter>
+
+
+  <script type="text/json">{
+  "title": "Demo VAD ViVoLab",
+  "description": "ViVoVAD: A Voice Activity Detection Tool Based on Recurrent Neural Networks",
+  "authors": [
+    {
+      "author": "Pablo Gimeno",
+      "authorURL": "http://vivolab.unizar.es/personal.html",
+      "affiliation": "ViVoLab, University of Zaragoza",
+      "affiliationURL": "http://vivolab.unizar.es/"
+    },
+    {
+      "author": "Ignacio Viñals",
+      "authorURL": "http://vivolab.unizar.es/personal.html",
+      "affiliation": "  ",
+      "affiliationURL": "http://vivolab.unizar.es/"
+    },
+     {
+      "author": "Alfonso Ortega",
+      "authorURL": "http://alfonso.vivolab.es/",
+      "affiliation": "  ",
+      "affiliationURL": "http://vivolab.unizar.es/"
+    },
+   {
+      "author": "Antonio Miguel",
+      "authorURL": "http://vivolab.unizar.es/personal.html",
+      "affiliation": "  ",
+      "affiliationURL": "http://vivolab.unizar.es/"
+    },
+
+    {
+      "author": "Eduardo Lleida",
+      "authorURL": "http://eduardo.vivolab.es/",
+      "affiliation": "  ",
+      "affiliationURL": "http://vivolab.unizar.es/"
+    },
+
+    {
+      "author": "Dayana Ribas",
+      "authorURL": "http://dayanaribas.vivolab.es/",
+      "affiliation": "  ",
+      "affiliationURL": "http://vivolab.unizar.es/"
+    }
+
+  ]
+  }</script>
+
+</d-front-matter>
+
+<d-title>
+  <h1>Voice Activity Detection</h1>
+  <p style="font-size: 1.2rem; margin-bottom: 40px;">
+    ViVoVAD: A Voice Activity Detection Tool Based on Recurrent Neural Networks
+ 	<img src="audiogif.gif" width="60%" height="75%" align="right" style="margin-top: 40px; margin-left: 20px"/>
+<span style="display:block; height: 45px;"></span>
+ 	Voice Activity Detection (VAD) aims to distinguish correctly those audio segments containing human speech. Here is our latest approach to the VAD task relying on the modelling capabilities of Bidirectional Long Short Term Memory (BLSTM) layers to classify speech/non-speech frames of an audio signal.
+  </p>
+	 
+  	 
+  
+  
+</d-title>
+
+<d-article>
+<p>
+VAD is broadly applied in different speech processing applications such as Automatic Speech Recognition (ASR), speaker identification or speech enchancement. A large number of different techniques have been proposed for this task, from unsupervised approaches based on energy<d-cite key="energyVAD"></d-cite>, or based on long-term spectral divergence (LTSD)<d-cite key="LTSDVAD"></d-cite>, to supervised approaches using Gaussian Mixture Models (GMM)<d-cite key="GMMVAD"></d-cite>. 
+</p>
+<p>
+More recently, deep learning approaches have attracted great research interesest<d-cite key="DNNVAD"></d-cite>, going from Convolutional Neural Networks (CNNs) to Recurrent Neural Networks (RNNs). RNNs are able to capture temporal dependencies introducing feedback loops between the input and the output of a neural network. The Long Short Term Memory (LSTM) network<d-cite key="LSTM"></d-cite> is a special kind of RNN that has become quite popular due to its capability to capture simultaneously long and short term dependencies. Specifically, Bidirectional LSTMs (BLSTMs) combine two different LSTM networks working on the same sequence: the first one carrying out a causal analysis and the second one carrying out an anticausal analysis. Some previous research work has proven the performance of these kind of models in the VAD task<d-cite key="LSTMVAD"></d-cite>.
+</p>
+
+<h2>System Description</h2>
+<p>
+Our proposed VAD system uses Bidirectional LSTMs as the main component of the system. The task is treated as a binary classifier, with our approach consisting of two different blocks: a first
+feature extraction step, and the RNN classifier. Both of them are described below:
+</p>
+
+<h3>Feature extraction</h3>
+<p>
+The input features for the neural network consist of log Mel filter bank energies. Furthermore, the log energy of each frame can be also considered. Features are extracted every 10 ms using a 25 ms
+window. Feature mean and variance normalization is applied at file level.
+</p>
+
+<h3>Recurrent Neural Network</h3>
+<p>
+The neural architecture proposed can be seen in the Figure below. As shown, it is mainly made of one or more stacked BLSTM layers. The final BLSTM layer output is then indepently classified by a linear
+layer sharing their weights for all time steps. In order to reduce the delay of the dependencies, training and evaluation is performed with limited length sequences of 300 frames (3 seconds).
+However, a VAD label is emited for every processed frame, which is equivalent to one label every 10 ms in our case.
+</p>
+<figure id="esquema_vad" class="l-body">
+    <img src="esquema_vad.png" alt="esquema_VAD">
+  </figure>
+      <figcaption class="l-gutter" style="margin-top: 200px;">
+      Neural architecture description of the proposed Voice Activity Detection system
+    </figcaption>
+<p>
+Adaptative Moment Estimation (Adam) optimizer is chosen due to its fast convergence properties. Furthermore, an exponential decay learning rate is implemented to ensure smooth convergence. Data
+will be shuffled in each training iteration aiming to improve model generalization capabilities. All the neural architectures have been evaluated using the PyTorch<d-cite key="pytorch"></d-cite> toolkit.	
+</p>
+
+
+<h2 id="demo">Demo</h2>
+<p>
+The following lines show an experimental test of our VAD system on broadcast environment samples from <a href="http://catedrartve.unizar.es/rtvedatabase.html">Albayzin 2018 RTVE dataset</a>. This architecture has been previously used in the framework of speaker diarization with good performance<d-cite key="dihard18,RTVEdiar"></d-cite>.
+</p>
+
+  <h3>Example 1<button id="btn1" type="button" style="margin-left: 20px" onclick="changeOpacity1()">Show VAD</button> </h3>
+
+  <div class="parent" style="margin-bottom: 20px">
+  <img class=image1 id="audio1_ref" src="audio1_tiempo_ref.png" width="100%" height="100%" style="margin-top: 30px; margin-left: 20px"/>
+  <img class=image2 id="audio1_vad" src="audio1_vad.png" width="100%" height="100%" style="margin-top: 30px; margin-left: 20px; opacity: 0"/>		
+  </div>
+  <div class="parent" style="margin-bottom: 20px">
+  <img class=image1 id="audio1_ref_freq" src="audio1_freq_ref.png" width="100%" height="100%" style="margin-top: 30px; margin-left: 20px"/>
+  <img class=image2 id="audio1_vad_freq" src="audio1_vad_freq.png" width="100%" height="100%" style="margin-top: 30px; margin-left: 20px; opacity: 0"/>		
+  </div>
+  <audio controls style="margin-left: 60px; margin-top: 20px">
+  <source src="example1.wav" type="audio/wav">
+  </audio> 
+
+  <h3>Example 2  <button id="btn2" type="button" style="margin-left: 20px" onclick="changeOpacity2()">Show VAD</button> </h3>
+  
+  <div class="parent" style="margin-bottom: 20px">
+  <img class=image1 id="audio2_ref" src="audio2_tiempo_ref.png" width="100%" height="100%" style="margin-top: 30px; margin-left: 20px"/>
+  <img class=image2 id="audio2_vad" src="audio2_vad.png" width="100%" height="100%" style="margin-top: 30px; margin-left: 20px; opacity: 0"/>		
+  </div>
+  <div class="parent" style="margin-bottom: 20px">
+  <img class=image1 id="audio2_ref_freq" src="audio2_freq_ref.png" width="100%" height="100%" style="margin-top: 30px; margin-left: 20px"/>
+  <img class=image2 id="audio2_vad_freq" src="audio2_vad_freq.png" width="100%" height="100%" style="margin-top: 30px; margin-left: 20px; opacity: 0"/>		
+  </div>
+  <audio controls style="margin-left: 60px; margin-top: 20px">
+  <source src="example2.wav" type="audio/wav">
+  </audio>
+
+  <h3>Example 3 <button id="btn3" type="button" style="margin-left: 20px" onclick="changeOpacity3()">Show VAD</button> </h3>
+
+  <div class="parent" style="margin-bottom: 20px">
+  <img class=image1 id="audio3_ref" src="audio3_tiempo_ref.png" width="100%" height="100%" style="margin-top: 30px; margin-left: 20px"/>
+  <img class=image2 id="audio3_vad" src="audio3_vad.png" width="100%" height="100%" style="margin-top: 30px; margin-left: 20px; opacity: 0"/>		
+  </div>
+  <div class="parent" style="margin-bottom: 20px">
+  <img class=image1 id="audio3_ref_freq" src="audio3_freq_ref.png" width="100%" height="100%" style="margin-top: 30px; margin-left: 20px"/>
+  <img class=image2 id="audio3_vad_freq" src="audio3_vad_freq.png" width="100%" height="100%" style="margin-top: 30px; margin-left: 20px; opacity: 0"/>		
+  </div>
+  
+  <audio controls style="margin-left: 60px; margin-top: 20px">
+  <source src="example3.wav" type="audio/wav">
+  </audio> 
+  
+</d-article>
+
+<d-appendix>
+  <d-footnote-list></d-footnote-list>
+  <d-citation-list></d-citation-list>
+</d-appendix>
+
+<d-bibliography src="bibliography.bib"></d-bibliography>
+
+<script type="text/javascript" src="index.bundle.js"></script></body>
+
+
+  <script>
+
+	function changeOpacity1() {
+	btn = document.getElementById('btn1');
+    x = document.getElementById('audio1_vad');
+    y = document.getElementById('audio1_vad_freq');
+
+
+    if (x.style.opacity > 0){
+    	x.style.opacity = 0
+    	y.style.opacity = 0
+    	btn.textContent = "Show VAD"
+    } else{
+    	x.style.opacity = 100;
+    	y.style.opacity = 100;
+    	btn.textContent = "Hide VAD"
+    }
+    
+}
+
+function changeOpacity2() {
+
+	btn = document.getElementById('btn2');
+    x = document.getElementById('audio2_vad');
+    y = document.getElementById('audio2_vad_freq');
+
+
+    if (x.style.opacity > 0){
+    	x.style.opacity = 0
+    	y.style.opacity = 0
+    	btn.textContent = "Show VAD"
+
+    } else{
+    	x.style.opacity = 100;
+    	y.style.opacity = 100;
+    	btn.textContent = "Hide VAD"
+    }
+    
+}
+
+function changeOpacity3() {
+	btn = document.getElementById('btn3');
+    x = document.getElementById('audio3_vad');
+    y = document.getElementById('audio3_vad_freq');
+
+
+    if (x.style.opacity > 0){
+    	x.style.opacity = 0
+    	y.style.opacity = 0
+    	btn.textContent = "Show VAD"
+    } else{
+    	x.style.opacity = 100;
+    	y.style.opacity = 100;
+    	btn.textContent = "Hide VAD"
+    }
+    
+}
+
+</script>
